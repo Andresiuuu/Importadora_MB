@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -29,7 +30,7 @@ fun MainScreen (){
         NavItem("Clientes", ImageVector.vectorResource(R.drawable.client_icon)),
         NavItem("Salir", ImageVector.vectorResource(R.drawable.log_out_icon))
     )
-    var selectedIndex by remember {
+    var selectedIndex by rememberSaveable {
         mutableStateOf(0)
     }
 

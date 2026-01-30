@@ -37,8 +37,8 @@ fun LowPolyBackgroundToCard(
                     Color(0xFFB6B5B5),
                     Color(0xFFA9A8A8),
                     Color(0xFFA8A7A7),
-                    Color(0xFF7E7D7D),
-                    Color(0xFF484747),
+                    Color(0xFF8A8989),
+                    Color(0xFF6B6A6A),
 
                 )
             )
@@ -121,8 +121,8 @@ fun interpolateColor1(progress: Float): Color {
         Color(0xFFAFADAD), // Blanco
         Color(0xFFA1A0A0), // Gris muy claro
         Color(0xFF9D9B9B), // Gris claro
-        Color(0xFF626161), // Gris medio
-        Color(0xFF4F4F4F), // Gris
+        Color(0xFF8D8D8D), // Gris medio
+        Color(0xFF797777), // Gris
 
     )
 
