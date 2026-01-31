@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,11 +21,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import app.aplication.sgd.ui.theme.app.componentes.Space
 import app.aplication.sgd.ui.theme.app.componentes.TextUi
-import app.aplication.sgd.ui.theme.app.model.Client
-import app.aplication.sgd.ui.theme.app.model.Cliente
 import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
 @Composable
-fun CardClientesHistorial(cliente: Client, modifier: Modifier = Modifier)
+fun CardClientesHistorial(nombre:String, ciudad:String, fechaDeuda:String, monto:String, modifier: Modifier = Modifier)
 {
 //Contendor principal de la card
     Box(
@@ -62,9 +59,9 @@ fun CardClientesHistorial(cliente: Client, modifier: Modifier = Modifier)
                 .padding(20.dp, 15.dp)
         ) {
             Spacer(modifier = Modifier.weight(1f))
-            TextUi(cliente.nombre, 20, color = Color.White, bold = true)
+            TextUi(nombre, 20, color = Color.White, bold = true)
             Space(8)
-            TextUi(cliente.direccion, 16, color = Color.White)
+            TextUi(ciudad, 16, color = Color.White)
 
             Space()
             Row(
@@ -73,9 +70,9 @@ fun CardClientesHistorial(cliente: Client, modifier: Modifier = Modifier)
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.Bottom,
             ) {
-                TextUi(cliente.estadoDeUltimaActualizacion, 20, true, Color.White)
+                TextUi(fechaDeuda, 20, true, Color.White)
                 Spacer(modifier = Modifier.weight(1f))
-                TextUi(cliente.montoDeuda, 20, true, Color.White)
+                TextUi(monto, 20, true, Color.White)
 
             }
 

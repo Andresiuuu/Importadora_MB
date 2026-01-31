@@ -5,18 +5,19 @@ import app.aplication.sgd.ui.theme.app.componentes.infoClientCard.InfoClientCard
 
 @Composable
 fun MostrarDatosCliente (){
-    val cliente = Client()
-    val nombreCliente = cliente.nombre
-    val ciudadCliente = cliente.direccion
-    val estadoUltActualizacion = cliente.estadoDeUltimaActualizacion
-    val montoDeuda = cliente.montoDeuda
-    val fechaModificacion = cliente.fechaModificacion
+    val cliente = Client(
+
+    )
+    val nombreCliente = cliente.fullname
+    val ciudadCliente = cliente.city
+    val estadoUltActualizacion = cliente.registrationDate
+    val montoDeuda = cliente.debt
 
         InfoClientCard(
+            cliente.id,
             nombreCliente,
             ciudadCliente,
             estadoUltActualizacion,
-            montoDeuda,
-            fechaModificacion
+            montoDeuda.toString()
         )
     }

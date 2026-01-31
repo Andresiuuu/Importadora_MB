@@ -30,7 +30,7 @@ import app.aplication.sgd.ui.theme.background.LowPolyBackground
 fun ClientesPage (
     viewModel: ClientViewModel = viewModel()
 ){
-    val cliente by viewModel.clientes.collectAsState()
+    val clientes = viewModel.cargarClientes()
     var busqueda by rememberSaveable { mutableStateOf("") }
     //Fondo low-poly
     LowPolyBackground()

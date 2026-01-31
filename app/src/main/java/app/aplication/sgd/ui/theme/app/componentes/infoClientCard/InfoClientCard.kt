@@ -29,11 +29,12 @@ import androidx.compose.ui.unit.dp
 import app.aplication.sgd.R
 import app.aplication.sgd.ui.theme.app.componentes.Space
 import app.aplication.sgd.ui.theme.app.componentes.TextUi
+import app.aplication.sgd.ui.theme.app.model.Client
 import app.aplication.sgd.ui.theme.app.model.Cliente
 import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
 
 @Composable
-fun InfoClientCard( nombre: String, ciudad:String, estado:String,monto:String,fechaModificacion:String, modifier: Modifier = Modifier)
+fun InfoClientCard(id:Int,nombre:String, ciudad:String, fechaDeuda:String, monto:String, modifier: Modifier = Modifier)
 {
 //Contendor principal de la card
     Box(
@@ -67,6 +68,7 @@ fun InfoClientCard( nombre: String, ciudad:String, estado:String,monto:String,fe
                 .padding(20.dp, 30.dp)
         ) {
             Spacer(modifier = Modifier.weight(1f))
+            //Muestra informacion del nombre
             TextUi(nombre, 20, color = Color.White, bold = true)
             Space(8)
             Row (
@@ -80,6 +82,7 @@ fun InfoClientCard( nombre: String, ciudad:String, estado:String,monto:String,fe
                     tint = Color.White,
                 )
                 Spacer(modifier = Modifier.width(5.dp))
+                //Muestra informacion de la ciudad
                 TextUi(ciudad, 13, color = Color.White)
                 Spacer(modifier = Modifier.weight(1f))
                 Icon(
@@ -95,7 +98,8 @@ fun InfoClientCard( nombre: String, ciudad:String, estado:String,monto:String,fe
                     tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(5.dp))
-                TextUi(fechaModificacion,13, color = Color.White)
+
+                TextUi(fechaDeuda,13, color = Color.White)
 
             }
             Space()
@@ -128,6 +132,7 @@ fun InfoClientCard( nombre: String, ciudad:String, estado:String,monto:String,fe
                     Column {
                         TextUi("Deuda total",13, color = Color.White)
                         Spacer(modifier = Modifier.weight(1f))
+                        //Monto de deuda
                         TextUi(monto, 20, true, Color.White)
                     }
                 }

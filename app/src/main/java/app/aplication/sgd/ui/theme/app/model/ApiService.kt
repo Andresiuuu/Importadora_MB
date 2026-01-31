@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface ApiService {
     @GET("clients")
-    suspend fun getClients(): Response<List<Client>>
+    suspend fun getClients(): List<Client>
 }

@@ -7,31 +7,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.aplication.sgd.ui.theme.app.componentes.FilterButton
 import app.aplication.sgd.ui.theme.app.componentes.Space
 import app.aplication.sgd.ui.theme.app.componentes.TextUi
 import app.aplication.sgd.ui.theme.app.viewModel.ClientViewModel
 import app.aplication.sgd.ui.theme.background.LowPolyBackground
-import androidx.compose.runtime.getValue
-import androidx.compose.foundation.lazy.items
 import app.aplication.sgd.ui.theme.app.componentes.card.CardClientesHistorial
-import app.aplication.sgd.ui.theme.app.model.Client
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.sp
+
 
 @Preview
 @Composable
 fun HistorialPage (
-    viewModel: ClientViewModel = viewModel()
+    viewModel: ClientViewModel = viewModel() //Inyección de dependencias
 ){
-    val clientes by viewModel.clientes.collectAsState()
+    val listaClientes by viewModel.clientes.collectAsStateWithLifecycle()
 
     //Fondo low-poly
     LowPolyBackground()
@@ -59,12 +57,17 @@ fun HistorialPage (
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                    .padding(0.dp,52.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             )
             {
-                items(clientes){
-                    Client ->
-                    CardClientesHistorial(Client)
+                items(listaClientes.take(10).size) { cliente ->
+                    CardClientesHistorial(
+                        nombre = listaClientes[cliente].fullname,
+                        ciudad = listaClientes[cliente].city,
+                        fechaDeuda = listaClientes[cliente].registrationDate,
+                        monto = listaClientes[cliente].debt.toString()
+                    )
                 }
 
             }
