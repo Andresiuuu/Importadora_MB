@@ -34,7 +34,7 @@ import app.aplication.sgd.ui.theme.app.model.Cliente
 import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
 
 @Composable
-fun InfoClientCard(id:Int,nombre:String, ciudad:String, fechaDeuda:String, monto:String, modifier: Modifier = Modifier)
+fun InfoClientCard(nombre:String, ciudad:String, fechaDeuda:String, monto:String, modifier: Modifier = Modifier)
 {
 //Contendor principal de la card
     Box(

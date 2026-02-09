@@ -10,20 +10,12 @@ import androidx.compose.ui.unit.sp
 
 //Size 10
 @Composable
-fun TextUi(text:String, size: Int = 10, bold:Boolean = false, color: Color = Color.Black,modifier: Modifier = Modifier) {
-    if (bold) {
-        Text(
-            text,
-            fontSize = size.sp,
-            fontWeight = FontWeight.Bold,
-            color = color
-        )
-    } else {
-        Text(
-            text,
-            fontSize = size.sp,
-            color = color
-
-        )
-    }
+fun TextUi(text:String, size: Int = 10, bold:Boolean = false, color: Color = Color.Black, modifier: Modifier = Modifier) {
+    Text(
+        text = text,
+        fontSize = size.sp,
+        fontWeight = if (bold) FontWeight.Bold else FontWeight.Normal,
+        color = color,
+        modifier = modifier
+    )
 }

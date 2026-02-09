@@ -29,13 +29,16 @@ import androidx.compose.ui.unit.dp
 import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
 import app.aplication.sgd.R
 
-@Preview
 @Composable
-fun FilterButton(){
+fun FilterButton(
+    isDescending: Boolean = true,
+    onClick: () -> Unit = {}
+){
     Box(
         modifier = Modifier
             .width(97.dp)
             .height(38.dp)
+            .clickable { onClick() }
     ) {
         //Efecto transparente
         Box(
@@ -44,9 +47,6 @@ fun FilterButton(){
                 .clip(RoundedCornerShape(28.dp))
                 .background(Color.Black.copy(alpha = 0.15f))
                 .blur(radius = 8.dp)
-                .clickable{
-                    //Acción al hacer clic
-                }
         ) {
         }
 
@@ -70,14 +70,22 @@ fun FilterButton(){
          )
          {
             Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.filter_icon) ,
-                contentDescription = null,
+                imageVector = ImageVector.vectorResource(
+                    if (isDescending) R.drawable.filter_icon else R.drawable.filter_icon
+                ),
+                contentDescription = if (isDescending) "Más reciente primero" else "Más antigua primero",
                 tint = Color.Unspecified,
                 modifier = Modifier.size(18.dp)
             )
             Spacer(modifier = Modifier.width(10.dp))
-            TextUi("Filtar", 12,color= Color.White)
+            TextUi(if (isDescending) "Reciente" else "Antigua", 12, color = Color.White)
         }
 
     }
+}
+
+@Preview
+@Composable
+fun FilterButtonPreview(){
+    FilterButton()
 }

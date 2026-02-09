@@ -69,7 +69,7 @@ fun SearchBar ( value:String,onValueChange:(String) -> Unit){
                     modifier = Modifier.weight(1f),
                     contentAlignment = Alignment.CenterStart
                 ) {if (value.isEmpty()) {
-                    TextUi("Buscar por nombre o ID", 20, color = Color.White)
+                    TextUi("Buscar por nombre", 20, color = Color.White)
                 }
                     innerTextField1()
                 }
