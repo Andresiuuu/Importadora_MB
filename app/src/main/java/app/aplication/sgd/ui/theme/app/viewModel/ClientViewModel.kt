@@ -77,6 +77,7 @@ fun buscarCliente(id: Int = 0){
         viewModelScope.launch {
             try {
                 val fechaActual = java.time.LocalDateTime.now().toString()
+                val fechaActual = java.time.LocalDate.now().toString()
                 val clientRequest = ClientRequest(
                     firstName = nombre,
                     lastName = apellido,
