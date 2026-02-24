@@ -114,10 +114,12 @@ fun ClientesPage (
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(clientesFiltrados) { cliente ->
+                    // Formatear fecha a AAAA-MM-DD (tomar solo los primeros 10 caracteres)
+                    val fechaFormateada = cliente.registrationDate.take(10)
                     InfoClientCard(
                         nombre = cliente.fullname,
                         ciudad = cliente.city,
-                        fechaDeuda = cliente.registrationDate,
+                        fechaDeuda = fechaFormateada,
                         monto = "$${cliente.debt}"
                     )
                 }

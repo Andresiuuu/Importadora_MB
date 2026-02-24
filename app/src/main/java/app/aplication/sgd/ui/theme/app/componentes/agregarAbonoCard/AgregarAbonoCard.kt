@@ -1,4 +1,5 @@
-package app.aplication.sgd.ui.theme.app.componentes.infoClientCard
+package app.aplication.sgd.ui.theme.app.componentes.agregarAbonoCard
+
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -25,22 +28,23 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import app.aplication.sgd.R
 import app.aplication.sgd.ui.theme.app.componentes.Space
 import app.aplication.sgd.ui.theme.app.componentes.TextUi
-import app.aplication.sgd.ui.theme.app.model.Client
-import app.aplication.sgd.ui.theme.app.model.Cliente
 import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
 @Composable
-fun InfoClientCard(nombre:String, ciudad:String, fechaDeuda:String, monto:String, modifier: Modifier = Modifier)
+fun AgregarAbonoCard(nombre:String, ciudad:String, fechaDeuda:String, monto:String, abono:String, modifier: Modifier = Modifier, onvalueChange:(String) -> Unit)
 {
 //Contendor principal de la card
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(278.dp)
+            .height(344.dp)
     ) {
         //Efecto transparente
         Box(
@@ -137,6 +141,55 @@ fun InfoClientCard(nombre:String, ciudad:String, fechaDeuda:String, monto:String
                     }
                 }
             }
+            // Entrada para descontar deuda
+            Space()
+            Box(
+                modifier = Modifier
+                    .width(326.dp)
+                    .height(68.dp)
+            ) {
+
+                //Efecto transparente
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(Color.White.copy(alpha = 0.10f))
+                        .blur(radius = 8.dp)
+                )
+                // Borde
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .border(
+                            1.dp,
+                            Color.White.copy(alpha = 0.80f),
+                            RoundedCornerShape(14.dp)
+                        )
+                        .padding(10.dp, 5.dp)
+                )
+                {
+                    Column {
+                        TextUi("Ingrese cantidad de abono",13, color = Color.White)
+                        Spacer(modifier = Modifier.height(20.dp))
+                        //Monto de deuda
+                        BasicTextField(keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text
+                        ),
+                            value = abono,
+                            onValueChange = onvalueChange,
+                            singleLine = true,
+                            textStyle = TextStyle(
+                                fontSize = 16.sp,
+                                color = Color.White
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(44.dp)
+                        )
+                    }
+                }
+            }
             Row(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -159,17 +212,19 @@ fun InfoClientCard(nombre:String, ciudad:String, fechaDeuda:String, monto:String
 
 @Preview(
     showBackground = true,
-    backgroundColor = 0xFF000000
-) // Fondo negro para resaltar el efecto glassmorphism
+    backgroundColor = 0xFF000000 // Fondo negro para resaltar el efecto glassmorphism
+)
 @Composable
-fun InfoClientCardPreview() {
+fun AgregarAbonoCardPreview() {
     // Usamos un Box con padding para ver mejor los bordes de la card
     Box(modifier = Modifier.padding(16.dp)) {
-        InfoClientCard(
+        AgregarAbonoCard(
             nombre = "Juan Pérez",
-            ciudad = "Buenos Aires",
+            ciudad = "Buenos Aires, ARG",
             fechaDeuda = "24/02/2024",
-            monto = "$15.500,00"
+            monto = "$150.000",
+            abono = "", // Valor inicial de ejemplo para el TextField
+            onvalueChange = {} // Función vacía para la previsualización
         )
     }
 }

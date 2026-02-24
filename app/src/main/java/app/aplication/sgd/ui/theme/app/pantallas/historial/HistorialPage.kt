@@ -24,7 +24,6 @@ import app.aplication.sgd.ui.theme.app.viewModel.ClientViewModel
 import app.aplication.sgd.ui.theme.background.LowPolyBackground
 import app.aplication.sgd.ui.theme.app.componentes.card.CardClientesHistorial
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.unit.sp
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -89,10 +88,11 @@ fun HistorialPage (
             )
             {
                 items(listaOrdenada.take(10).size) { index ->
+                    val fechaFormateada = listaOrdenada[index].registrationDate.take(10)
                     CardClientesHistorial(
                         nombre = listaOrdenada[index].fullname,
                         ciudad = listaOrdenada[index].city,
-                        fechaDeuda = listaOrdenada[index].registrationDate,
+                        fechaDeuda = fechaFormateada,
                         monto = listaOrdenada[index].debt.toString()
                     )
                 }
