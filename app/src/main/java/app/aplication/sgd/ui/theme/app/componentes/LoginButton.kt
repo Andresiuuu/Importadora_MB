@@ -12,21 +12,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoginButton(){
+fun LoginButton(
+    text: String = "Iniciar Sesión",
+    onClick: () -> Unit = {},
+    enabled: Boolean = true
+){
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .height(35.dp)
-            ,
-        border = BorderStroke(1.dp,Color.Black),
+            .height(35.dp),
+        border = BorderStroke(1.dp, Color.Black),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(0xFF9C1E22)
         ),
-
-        onClick = {
-
-    }){
-        TextUi("Iniciar Sesion",13,true,Color.White)
+        enabled = enabled,
+        onClick = onClick
+    ){
+        TextUi(text, 13, true, Color.White)
     }
 }

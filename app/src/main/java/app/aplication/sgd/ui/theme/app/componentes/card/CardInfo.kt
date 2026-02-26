@@ -2,6 +2,7 @@ package app.aplication.sgd.ui.theme.app.componentes.card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,12 +28,13 @@ import app.aplication.sgd.ui.theme.app.componentes.TextUi
 import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
 
 @Composable
-fun CardInfo(icono: ImageVector, texto: String, numero: String, modifier: Modifier = Modifier) {
+fun CardInfo(icono: ImageVector, texto: String, numero: String, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
 //Contendor principal de la card
     Box(
         modifier = Modifier
             .width(180.dp)
             .height(172.dp)
+            .then(if (onClick != null) Modifier.clickable { onClick() } else Modifier)
     ) {
 
         //Efecto transparente

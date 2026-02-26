@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "998784397148",
+    "project_id": "sgd-importadora",
+    "storage_bucket": "sgd-importadora.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998784397148:android:7ea50f4a541033e4741b99",
+        "android_client_info": {
+          "package_name": "app.aplication.sgd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998784397148-gtkrvu0uebji1rcitks8ranvjvfqvcv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgz6Eh0azSp2v9gQanor3HvZGgWul_dZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998784397148-gtkrvu0uebji1rcitks8ranvjvfqvcv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

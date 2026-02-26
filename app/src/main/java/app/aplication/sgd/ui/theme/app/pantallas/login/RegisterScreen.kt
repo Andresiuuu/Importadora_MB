@@ -36,15 +36,16 @@ import app.aplication.sgd.ui.theme.background.LowPolyBackground
 import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
 
 @Composable
-fun LoginScreen(
-    onSignIn: (email: String, password: String) -> Unit,
-    onNavigateToRegister: () -> Unit,
+fun RegisterScreen(
+    onSignUp: (email: String, password: String, nombre: String) -> Unit,
+    onNavigateToLogin: () -> Unit,
     isLoading: Boolean = false,
     errorMessage: String? = null
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         LowPolyBackground()
 
+        var nombre by rememberSaveable { mutableStateOf("") }
         var email by rememberSaveable { mutableStateOf("") }
         var password by rememberSaveable { mutableStateOf("") }
 
@@ -63,13 +64,12 @@ fun LoginScreen(
                     .fillMaxWidth()
                     .size(236.dp, 70.dp)
             )
-            Space(50)
+            Space(30)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(380.dp)
+                    .height(440.dp)
             ) {
-                // Efecto transparente
                 Box(
                     modifier = Modifier
                         .matchParentSize()
@@ -80,7 +80,6 @@ fun LoginScreen(
                     LowPolyBackgroundToCard()
                 }
 
-                // Borde
                 Box(
                     modifier = Modifier
                         .matchParentSize()
@@ -91,27 +90,32 @@ fun LoginScreen(
                         )
                 )
 
-                // Contenido
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(33.dp, 30.dp)
+                        .padding(33.dp, 24.dp)
                 ) {
                     TextUi(
-                        text = "Inicie sesión para continuar",
+                        text = "Crear cuenta",
                         size = 16,
                         color = Color.White
                     )
-                    Space(26)
+                    Space(20)
 
                     Column(Modifier.fillMaxWidth()) {
+                        TextUi(text = "Nombre completo", size = 13, color = Color.White)
+                        TextFieldUserUi(
+                            value = nombre,
+                            onValueChange = { nombre = it }
+                        )
+                        Space(16)
                         TextUi(text = "Correo", size = 13, color = Color.White)
                         TextFieldUserUi(
                             value = email,
                             onValueChange = { email = it }
                         )
-                        Space(26)
+                        Space(16)
                         TextUi(text = "Contraseña", size = 13, color = Color.White)
                         TextFieldPassUi(
                             value = password,
@@ -124,27 +128,25 @@ fun LoginScreen(
                         TextUi(text = errorMessage, size = 12, color = Color(0xFFFF6B6B))
                     }
 
-                    Space(26)
+                    Space(20)
 
                     if (isLoading) {
                         CircularProgressIndicator(color = Color.White)
                     } else {
                         LoginButton(
-                            text = "Iniciar Sesión",
-                            onClick = { onSignIn(email, password) },
-                            enabled = email.isNotBlank() && password.isNotBlank()
+                            text = "Registrarse",
+                            onClick = { onSignUp(email, password, nombre) },
+                            enabled = nombre.isNotBlank() && email.isNotBlank() && password.length >= 6
                         )
                     }
 
-                    Space(16)
+                    Space(12)
                     TextUi(
-                        text = "\u00bfNo tienes cuenta? Reg\u00edstrate",
+                        text = "¿Ya tienes cuenta? Inicia sesión",
                         size = 13,
                         color = Color.White,
-                        modifier = Modifier.clickable { onNavigateToRegister() }
+                        modifier = Modifier.clickable { onNavigateToLogin() }
                     )
-                    Space(12)
-                    TextUi("versión 1.0", color = Color.White)
                 }
             }
         }

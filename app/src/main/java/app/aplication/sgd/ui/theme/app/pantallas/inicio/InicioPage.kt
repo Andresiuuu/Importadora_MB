@@ -31,11 +31,14 @@ import app.aplication.sgd.ui.theme.background.LowPolyBackground
 
 @Preview
 @Composable
-fun InicioPage (){
+fun InicioPage (
+    userName: String = "Usuario",
+    isAdmin: Boolean = false,
+    onOpenAdmin: () -> Unit = {}
+){
     val infoCard1 by rememberSaveable { mutableStateOf("Clientes Registrados")}
     val infoCard2 by rememberSaveable { mutableStateOf("Deuda total")}
     val infoCard3 by rememberSaveable { mutableStateOf("Actualizaciones totales en la semana")}
-    val userName by rememberSaveable { mutableStateOf(Usuario.Nombre)}
         //Fondo low-poly
         LowPolyBackground()
         // Contenedor principal
@@ -102,6 +105,17 @@ fun InicioPage (){
                         "16"
                         )
 
+                }
+                if (isAdmin) {
+                    Space(13)
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        CardInfo(
+                            icono = ImageVector.vectorResource(R.drawable.user_round_search),
+                            "Panel de Admin",
+                            "Gestionar",
+                            onClick = onOpenAdmin
+                        )
+                    }
                 }
 
             }
