@@ -13,10 +13,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,6 +45,7 @@ import app.aplication.sgd.ui.theme.app.viewModel.AuthViewModel
 private val NavBarBg = Color(0xFF111118)
 private val ActiveRed = Color(0xFF9C1E22)
 private val InactiveGray = Color(0xFF7E7E86)
+private val BackgroundColor = Color(0xFFA9A9B2)
 
 @Composable
 fun MainScreen(
@@ -51,7 +54,6 @@ fun MainScreen(
     authViewModel: AuthViewModel? = null,
     onSignOut: () -> Unit = {}
 ) {
-    // Fixed nav: Inicio, Historial, Clientes, Salir  (Admin is inside Inicio or a separate page)
     val navItems = listOf(
         NavItem("Inicio", icon = ImageVector.vectorResource(R.drawable.house_icon)),
         NavItem("Historial", ImageVector.vectorResource(R.drawable.clipboard_icon)),
@@ -60,10 +62,34 @@ fun MainScreen(
     )
 
     var selectedIndex by rememberSaveable { mutableStateOf(0) }
-    // Admin panel is accessed via a 4th content index (hidden from nav)
+    var mostrarDialogoSalir by rememberSaveable { mutableStateOf(false) }
+
     val showAdmin = selectedIndex == 4
 
+    // Dialogo de confirmación para cerrar sesión
+    if (mostrarDialogoSalir) {
+        AlertDialog(
+            onDismissRequest = { mostrarDialogoSalir = false },
+            title = { Text("Cerrar sesión") },
+            text = { Text("¿Estás seguro de que deseas cerrar sesión?") },
+            confirmButton = {
+                TextButton(onClick = {
+                    mostrarDialogoSalir = false
+                    onSignOut()
+                }) {
+                    Text("Sí")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { mostrarDialogoSalir = false }) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
+
     Scaffold(
+        containerColor = BackgroundColor,
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             Column {
@@ -74,7 +100,7 @@ fun MainScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(NavBarBg)
-                        .padding(vertical = 6.dp),
+                        .height(100.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -89,7 +115,7 @@ fun MainScreen(
                                     indication = null,
                                     interactionSource = remember { MutableInteractionSource() }
                                 ) {
-                                    if (isSalir) onSignOut()
+                                    if (isSalir) mostrarDialogoSalir = true
                                     else selectedIndex = index
                                 }
                                 .padding(horizontal = 12.dp, vertical = 4.dp)
@@ -97,7 +123,7 @@ fun MainScreen(
                             Box(
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier
-                                    .size(40.dp)
+                                    .size(50.dp)
                                     .then(
                                         if (isSelected) Modifier
                                             .clip(CircleShape)
@@ -114,7 +140,7 @@ fun MainScreen(
                             }
                             Text(
                                 text = navItem.label,
-                                fontSize = 10.sp,
+                                fontSize = 11.sp,
                                 fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal,
                                 color = if (isSelected) Color.White else InactiveGray
                             )

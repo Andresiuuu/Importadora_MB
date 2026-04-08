@@ -23,6 +23,13 @@ interface ApiService {
         @Body client: ClientRequest
     ): Client
 
+    @POST("clients/{id}/payments") //Esto agrega abonos a un cliente y lo resta a su deuda
+    suspend fun registerPayment(
+        @Path("id") id: Int,
+        @Body payment: PaymentRequest
+    ): Client
+
+
     // Auth endpoints
     @POST("auth/register")
     suspend fun registerUser(

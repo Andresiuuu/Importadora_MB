@@ -21,7 +21,9 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -38,15 +40,62 @@ import app.aplication.sgd.ui.theme.app.componentes.Space
 import app.aplication.sgd.ui.theme.app.componentes.TextUi
 import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
 @Composable
-fun AgregarAbonoCard(nombre:String, ciudad:String, fechaDeuda:String, monto:String, abono:String, modifier: Modifier = Modifier, onvalueChange:(String) -> Unit)
-{
-//Contendor principal de la card
+fun AgregarAbonoCard(
+    nombre: String,
+    ciudad: String,
+    fechaDeuda: String,
+    monto: String,
+    abono: String,
+    modifier: Modifier = Modifier,
+    onvalueChange: (String) -> Unit,
+    onAbonar: () -> Unit = {},
+    onCancelar: () -> Unit = {}
+) {
+    // Estado para controlar la visibilidad del diálogo de confirmación
+    var showDialog by remember { androidx.compose.runtime.mutableStateOf(false) }
+
+    // Diálogo de Confirmación
+    if (showDialog) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = {
+                TextUi("Confirmar Abono", 18, bold = true)
+            },
+            text = {
+                Column {
+                    TextUi("¿Estás seguro de que deseas registrar este abono?", 14)
+                    Space(8)
+                    TextUi("Cliente: $nombre", 14, bold = true)
+                    TextUi("Cantidad: $$abono", 16, bold = true, color = Color(0xFF4CAF50))
+                }
+            },
+            confirmButton = {
+                androidx.compose.material3.TextButton(
+                    onClick = {
+                        showDialog = false
+                        onAbonar() // Ejecuta la función real de guardado
+                    }
+                ) {
+                    TextUi("Confirmar", 14, bold = true)
+                }
+            },
+            dismissButton = {
+                androidx.compose.material3.TextButton(
+                    onClick = { showDialog = false }
+                ) {
+                    TextUi("Cancelar", 14)
+                }
+            }
+        )
+    }
+
+    // Contenedor principal de la card
     Box(
-        modifier = Modifier
+        modifier = modifier // Usamos el modifier pasado por parámetro
             .fillMaxWidth()
             .height(344.dp)
     ) {
-        //Efecto transparente
+        // Efecto transparente
         Box(
             modifier = Modifier
                 .matchParentSize()
@@ -72,21 +121,21 @@ fun AgregarAbonoCard(nombre:String, ciudad:String, fechaDeuda:String, monto:Stri
                 .padding(20.dp, 30.dp)
         ) {
             Spacer(modifier = Modifier.weight(1f))
-            //Muestra informacion del nombre
+            // Muestra información del nombre
             TextUi(nombre, 20, color = Color.White, bold = true)
             Space(8)
-            Row (
+            Row(
                 modifier = Modifier
                     .height(40.dp),
                 verticalAlignment = Alignment.Bottom
-            ){
+            ) {
                 Icon(
                     painter = painterResource(R.drawable.map_pin_icon),
                     contentDescription = null,
                     tint = Color.White,
                 )
                 Spacer(modifier = Modifier.width(5.dp))
-                //Muestra informacion de la ciudad
+                // Muestra información de la ciudad
                 TextUi(ciudad, 13, color = Color.White)
                 Spacer(modifier = Modifier.weight(1f))
                 Icon(
@@ -102,18 +151,15 @@ fun AgregarAbonoCard(nombre:String, ciudad:String, fechaDeuda:String, monto:Stri
                     tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(5.dp))
-
-                TextUi(fechaDeuda,13, color = Color.White)
-
+                TextUi(fechaDeuda, 13, color = Color.White)
             }
             Space()
+            // Caja de Deuda Total
             Box(
                 modifier = Modifier
-                    .width(326.dp)
+                    .fillMaxWidth()
                     .height(68.dp)
             ) {
-
-                //Efecto transparente
                 Box(
                     modifier = Modifier
                         .matchParentSize()
@@ -121,7 +167,6 @@ fun AgregarAbonoCard(nombre:String, ciudad:String, fechaDeuda:String, monto:Stri
                         .background(Color.White.copy(alpha = 0.10f))
                         .blur(radius = 8.dp)
                 )
-                // Borde
                 Box(
                     modifier = Modifier
                         .matchParentSize()
@@ -131,25 +176,21 @@ fun AgregarAbonoCard(nombre:String, ciudad:String, fechaDeuda:String, monto:Stri
                             RoundedCornerShape(14.dp)
                         )
                         .padding(10.dp, 5.dp)
-                )
-                {
+                ) {
                     Column {
-                        TextUi("Deuda total",13, color = Color.White)
+                        TextUi("Deuda total", 13, color = Color.White)
                         Spacer(modifier = Modifier.weight(1f))
-                        //Monto de deuda
                         TextUi(monto, 20, true, Color.White)
                     }
                 }
             }
-            // Entrada para descontar deuda
+            // Entrada para descontar deuda (Abono)
             Space()
             Box(
                 modifier = Modifier
-                    .width(326.dp)
+                    .fillMaxWidth()
                     .height(68.dp)
             ) {
-
-                //Efecto transparente
                 Box(
                     modifier = Modifier
                         .matchParentSize()
@@ -157,7 +198,6 @@ fun AgregarAbonoCard(nombre:String, ciudad:String, fechaDeuda:String, monto:Stri
                         .background(Color.White.copy(alpha = 0.10f))
                         .blur(radius = 8.dp)
                 )
-                // Borde
                 Box(
                     modifier = Modifier
                         .matchParentSize()
@@ -167,15 +207,14 @@ fun AgregarAbonoCard(nombre:String, ciudad:String, fechaDeuda:String, monto:Stri
                             RoundedCornerShape(14.dp)
                         )
                         .padding(10.dp, 5.dp)
-                )
-                {
+                ) {
                     Column {
-                        TextUi("Ingrese cantidad de abono",13, color = Color.White)
+                        TextUi("Ingrese cantidad de abono", 13, color = Color.White)
                         Spacer(modifier = Modifier.height(20.dp))
-                        //Monto de deuda
-                        BasicTextField(keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text
-                        ),
+                        BasicTextField(
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number
+                            ),
                             value = abono,
                             onValueChange = onvalueChange,
                             singleLine = true,
@@ -190,41 +229,34 @@ fun AgregarAbonoCard(nombre:String, ciudad:String, fechaDeuda:String, monto:Stri
                     }
                 }
             }
+            // Botones de acción
             Row(
-                modifier = Modifier
-                    .fillMaxSize(),
-                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Bottom,
             ) {
-                //Boton para añadir abono
+                // Botón para cancelar
+                TextUi("Cancelar", 13, true, Color.White, Modifier
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) {
+                        onCancelar()
+                    }
+                )
+                // Botón para añadir abono (Activa el diálogo)
                 TextUi("Añadir abono", 13, true, Color.White, Modifier
                     .clickable(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
-                    ){
-
+                    ) {
+                        // Solo mostramos el diálogo si hay algo escrito en abono
+                        if (abono.isNotBlank()) {
+                            showDialog = true
+                        }
                     }
                 )
             }
         }
-    }
-}
-
-@Preview(
-    showBackground = true,
-    backgroundColor = 0xFF000000 // Fondo negro para resaltar el efecto glassmorphism
-)
-@Composable
-fun AgregarAbonoCardPreview() {
-    // Usamos un Box con padding para ver mejor los bordes de la card
-    Box(modifier = Modifier.padding(16.dp)) {
-        AgregarAbonoCard(
-            nombre = "Juan Pérez",
-            ciudad = "Buenos Aires, ARG",
-            fechaDeuda = "24/02/2024",
-            monto = "$150.000",
-            abono = "", // Valor inicial de ejemplo para el TextField
-            onvalueChange = {} // Función vacía para la previsualización
-        )
     }
 }

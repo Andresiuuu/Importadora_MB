@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.aplication.sgd.R
@@ -39,7 +40,8 @@ import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
 
 @Composable
 fun ClientFormCard(
-    onGuardar: (nombre: String, apellido: String, ubicacion: String, montoDeuda: String) -> Unit = { _, _, _, _ -> }
+    onGuardar: (nombre: String, apellido: String, ubicacion: String, montoDeuda: String) -> Unit = { _, _, _, _ -> },
+    onCancelar: () -> Unit = {}
 ){
     var nombre by rememberSaveable { mutableStateOf("") }
     var apellido by rememberSaveable { mutableStateOf("") }
@@ -101,15 +103,25 @@ fun ClientFormCard(
             textFieldUi(
                 value = montoDeuda,
                 weight = 130,
+                keyboardType = KeyboardType.Number,
                 onValueChange = { montoDeuda = it }
             )
 
             Spacer(modifier = Modifier.weight(1f))
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Bottom,
             ) {
+                //Boton para cancelar y volver
+                TextUi("Cancelar", 13, true, Color.White, Modifier
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ){
+                        onCancelar()
+                    }
+                )
                 //Boton para guardar cliente nuevo
                 TextUi("Guardar", 13, true, Color.White, Modifier
                     .clickable(
@@ -123,7 +135,6 @@ fun ClientFormCard(
         }
     }
 }
-
 @Preview
 @Composable
 fun ClientFormCardPreview() {

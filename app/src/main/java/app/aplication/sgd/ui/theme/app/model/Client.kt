@@ -15,11 +15,11 @@ data class Client(
     @SerialName("id")
     val id: Int = 0,
     @SerialName("payment")
-    val payment: Any = 0,
+    val payment: Double? = 0.0,
     @SerialName("registrationDate")
     val registrationDate: String = "Sin datos",
     @SerialName("status")
-    val status: Any = 0,
+    val status: String? = "ACTIVE",
     @SerialName("totalAmount")
-    val totalAmount: Any = 0
+    val totalAmount: Double? = 0.0
 )

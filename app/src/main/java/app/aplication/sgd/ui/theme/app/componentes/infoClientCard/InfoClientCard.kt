@@ -34,8 +34,14 @@ import app.aplication.sgd.ui.theme.app.model.Client
 import app.aplication.sgd.ui.theme.app.model.Cliente
 import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
 @Composable
-fun InfoClientCard(nombre:String, ciudad:String, fechaDeuda:String, monto:String, modifier: Modifier = Modifier)
-{
+fun InfoClientCard(
+    nombre: String,
+    ciudad: String,
+    fechaDeuda: String,
+    monto: String,
+    modifier: Modifier = Modifier,
+    onAñadirAbono: () -> Unit = {}
+) {
 //Contendor principal de la card
     Box(
         modifier = Modifier
@@ -108,7 +114,6 @@ fun InfoClientCard(nombre:String, ciudad:String, fechaDeuda:String, monto:String
                     .width(326.dp)
                     .height(68.dp)
             ) {
-
                 //Efecto transparente
                 Box(
                     modifier = Modifier
@@ -149,7 +154,7 @@ fun InfoClientCard(nombre:String, ciudad:String, fechaDeuda:String, monto:String
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() }
                     ){
-
+                        onAñadirAbono()
                     }
                 )
             }

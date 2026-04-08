@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.aplication.sgd.R
 import app.aplication.sgd.ui.theme.app.componentes.LoginButton
@@ -34,7 +35,6 @@ import app.aplication.sgd.ui.theme.app.componentes.TextFieldPassUi
 import app.aplication.sgd.ui.theme.app.componentes.TextUi
 import app.aplication.sgd.ui.theme.background.LowPolyBackground
 import app.aplication.sgd.ui.theme.theme.LowPolyBackgroundToCard
-
 @Composable
 fun LoginScreen(
     onSignIn: (email: String, password: String) -> Unit,
@@ -49,21 +49,20 @@ fun LoginScreen(
         var password by rememberSaveable { mutableStateOf("") }
 
         Column(
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(50.dp, 0.dp)
         ) {
+            Space(30)
             Image(
-                painter = painterResource(R.drawable.logo_tlyly1111_artguru),
+                painter = painterResource(R.drawable.logo_removebg_preview),
                 contentDescription = null,
-                alignment = Alignment.Center,
+                alignment = Alignment.CenterStart,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .size(236.dp, 70.dp)
+                    .size(250.dp)
+
             )
-            Space(50)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
